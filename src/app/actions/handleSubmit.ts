@@ -12,6 +12,7 @@ const notion = new Client({
     const slug = formData.get('slug');
     const file = formData.get('file');
     try {
+      console.log("Payload:  "+title +" -- " + slug + " - " + file)
       const databaseId = process.env.NOTION_DB_ID;
       const response = await notion.pages.create({
         "parent": {
@@ -21,7 +22,7 @@ const notion = new Client({
         "properties": {
           "title": {"title": [{ "type": "text", "text": { "content": title } }]},
           "slug": {"rich_text": [{"text": {"content": slug }}]},
-          "file": {"url": {"url": file }},
+          "file": {"url": file },
         }
       });
       console.log(response);
