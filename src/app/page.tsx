@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Chip from '@mui/material/Chip';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -164,7 +165,8 @@ export default function Home() {
               />
             </Button>
             <Button type="submit">Upload</Button>
-            <Box>{filename}</Box>
+            <Chip>{filename} variant="outlined"</Chip>
+            <Chip>{blob.url} variant="outlined"</Chip>
           </form>
         </Box>
       </Container>
