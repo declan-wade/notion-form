@@ -8,6 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import Input from "@mui/material/Input";
 import Avatar from "@mui/material/Avatar";
 import * as React from "react";
 import { addTodo } from "./actions/handleSubmit";
@@ -15,7 +16,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Container from "@mui/material/Container";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { revalidatePath } from "next/cache";
-import type { PutBlobResult } from '@vercel/blob';
+import type { PutBlobResult } from "@vercel/blob";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -25,11 +26,21 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function Home() {
+  const [filename, setFilename] = React.useState("");
   const inputFileRef = React.useRef<HTMLInputElement>(null);
   const [blob, setBlob] = React.useState<PutBlobResult | null>(null);
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
   const [submitButton, setSubmitButton] = React.useState(false);
+
+  const updateFilename = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+    const file = e.target.files[0];
+    const { name } = file;
+    setFilename(name);
+  };
 
   async function clientAction(formData: FormData) {
     setSubmitButton(true);
@@ -110,39 +121,51 @@ export default function Home() {
             </Button>
           </form>
         </Box>
-        <Box sx={{
+        <Box
+          sx={{
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
-        <form
-        onSubmit={async (event) => {
-          event.preventDefault();
- 
-          if (!inputFileRef.current?.files) {
-            throw new Error('No file selected');
-          }
- 
-          const file = inputFileRef.current.files[0];
- 
-          const response = await fetch(
-            `/actions/handleUpload?filename=${file.name}`,
-            {
-              method: 'POST',
-              body: file,
-            },
-          );
- 
-          const newBlob = (await response.json()) as PutBlobResult;
- 
-          setBlob(newBlob);
-        }}
-      >
-        <input name="file" ref={inputFileRef} type="file" required />
-        <button type="submit">Upload</button>
-      </form>
+          }}
+        >
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
 
+              if (!inputFileRef.current?.files) {
+                throw new Error("No file selected");
+              }
+
+              const file = inputFileRef.current.files[0];
+
+              const response = await fetch(
+                `/actions/handleUpload?filename=${file.name}`,
+                {
+                  method: "POST",
+                  body: file,
+                }
+              );
+
+              const newBlob = (await response.json()) as PutBlobResult;
+
+              setBlob(newBlob);
+            }}
+          >
+            <Button variant="contained" component="label">
+              Choose File
+              <input
+                name="file"
+                ref={inputFileRef}
+                type="file"
+                hidden
+                required
+                onChange={updateFilename}
+              />
+            </Button>
+            <Button type="submit">Upload</Button>
+            <Box>{filename}</Box>
+          </form>
         </Box>
       </Container>
     </div>
