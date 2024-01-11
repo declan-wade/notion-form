@@ -165,8 +165,12 @@ export default function Home() {
               />
             </Button>
             <Button type="submit">Upload</Button>
-            <Chip>{filename} variant="outlined"</Chip>
-            <Chip>{blob.url} variant="outlined"</Chip>
+            <br></br>
+            <br></br>
+            {filename.length ? <Chip variant="outlined" label={filename}></Chip> : null}
+            <br></br>
+            <br></br>
+            {blobUrl.length ? <Chip variant="outlined" label={blobUrl}></Chip> : null}
           </form>
         </Box>
       </Container>
