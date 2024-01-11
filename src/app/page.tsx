@@ -33,7 +33,7 @@ export default function Home() {
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
   const [submitButton, setSubmitButton] = React.useState(false);
-
+  const [blobUrl, setBlobUrl] = React.useState("")
   const updateFilename = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
@@ -151,6 +151,7 @@ export default function Home() {
               const newBlob = (await response.json()) as PutBlobResult;
               console.log(newBlob);
               setBlob(newBlob);
+              setBlobUrl(newBlob.url)
             }}
           >
             <Button variant="contained" component="label">
