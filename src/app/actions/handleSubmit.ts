@@ -10,6 +10,7 @@ const notion = new Client({
   export async function addTodo (formData: FormData){
     const title = formData.get('title');
     const slug = formData.get('slug');
+    const file = formData.get('file');
     try {
       const databaseId = process.env.NOTION_DB_ID;
       const response = await notion.pages.create({
@@ -20,6 +21,7 @@ const notion = new Client({
         "properties": {
           "title": {"title": [{ "type": "text", "text": { "content": title } }]},
           "slug": {"rich_text": [{"text": {"content": slug }}]},
+          "file": {"url": {"url": file }},
         }
       });
       console.log(response);

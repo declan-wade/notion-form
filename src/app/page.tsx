@@ -4,9 +4,10 @@ import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Chip from '@mui/material/Chip';
+import Chip from "@mui/material/Chip";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Input from "@mui/material/Input";
@@ -41,7 +42,7 @@ export default function Home() {
     const file = e.target.files[0];
     const { name } = file;
     setFilename(name);
-  };
+  }
 
   async function clientAction(formData: FormData) {
     setSubmitButton(true);
@@ -117,6 +118,12 @@ export default function Home() {
             />
             <br></br>
             <br></br>
+            <input
+              id="file"
+              name="file"
+              defaultValue={blobUrl}
+              type="hidden"
+            />
             <Button type="submit" variant="outlined" disabled={submitButton}>
               Submit
             </Button>
@@ -139,7 +146,6 @@ export default function Home() {
               }
 
               const file = inputFileRef.current.files[0];
-
               const response = await fetch(
                 `/actions/handleUpload?filename=${file.name}`,
                 {
@@ -147,13 +153,14 @@ export default function Home() {
                   body: file,
                 }
               );
-        
+
               const newBlob = (await response.json()) as PutBlobResult;
-              console.log(newBlob);
+
               setBlob(newBlob);
               setBlobUrl(newBlob.url)
             }}
           >
+            
             <Button variant="contained" component="label">
               Choose File
               <input
@@ -171,7 +178,7 @@ export default function Home() {
             {filename.length ? <Chip variant="outlined" label={filename}></Chip> : null}
             <br></br>
             <br></br>
-            {blobUrl.length ? <Chip variant="outlined" label={blobUrl}></Chip> : null}
+            {blobUrl.length ? <Chip variant="outlined" color="success" icon={<DoneAllIcon />} label="Uploaded!"></Chip> : null}
           </form>
         </Box>
       </Container>
