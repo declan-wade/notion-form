@@ -11,7 +11,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
     console.log("Logging blob object...")
     console.log(blob)
-    return NextResponse.json(blob);
+    return NextResponse.json({ error: "Successful Upload" },
+    { status: 200 });
   } else {
     return NextResponse.json(
       { error: "Internal Server Error" },

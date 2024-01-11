@@ -146,9 +146,9 @@ export default function Home() {
                   body: file,
                 }
               );
-
+        
               const newBlob = (await response.json()) as PutBlobResult;
-
+              console.log(newBlob);
               setBlob(newBlob);
             }}
           >
