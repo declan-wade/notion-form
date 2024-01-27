@@ -4,7 +4,7 @@ This repo is a very simple demonstration of uploading form data directly into a 
 The Notion API does not support uploading of files at the moment. Instead, this uploads the file to Vercel Blob Storage and provides the link to download the file to Notion. 
 
 > [!IMPORTANT]
-> This repo is not ready to be used out-of-the-box. This can be used as a starter for a production-ready form but some knowledge of React, Material UI and TypeScript.
+> This repo is not ready to be used out-of-the-box. This can be used as a starter for a production-ready form but some knowledge of React, Material UI and TypeScript is recommended.
 
 ## Prerequisites:
 
